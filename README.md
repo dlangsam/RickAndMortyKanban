@@ -91,12 +91,6 @@ src/
 User Action → Context Function → State Update → React Re-render → UI Update
 ```
 
-### Extensibility
-The architecture is designed to easily add:
-- **Persistence:** Add `useEffect` in context to sync with localStorage/API
-- **Filtering:** Add filter state to context, compute filtered items
-- **Additional Features:** Edit, delete, search, etc.
-
 ## Build for Production
 
 ```bash

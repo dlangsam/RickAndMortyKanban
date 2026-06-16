@@ -75,6 +75,9 @@ export function BoardColumns() {
   // Called when drag ends
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
+
+    // Save the original status before clearing activeItem
+    const originalStatus = activeItem?.status;
     setActiveItem(null);
 
     if (!over) return;
@@ -82,27 +85,27 @@ export function BoardColumns() {
     const activeId = active.id as string;
     const overId = over.id as string;
 
-    // Find the items
-    const activeItem = items.find((item) => item.id === activeId);
+    // Find the items (with current/updated status)
+    const updatedItem = items.find((item) => item.id === activeId);
     const overItem = items.find((item) => item.id === overId);
 
-    if (!activeItem) return;
+    if (!updatedItem) return;
 
     // If dropped on another item in the same column, reorder
-    if (overItem && activeItem.status === overItem.status) {
-      const columnItems = items.filter((item) => item.status === activeItem.status);
+    if (overItem && updatedItem.status === overItem.status) {
+      const columnItems = items.filter((item) => item.status === updatedItem.status);
       const activeIndex = columnItems.findIndex((item) => item.id === activeId);
       const overIndex = columnItems.findIndex((item) => item.id === overId);
 
       if (activeIndex !== overIndex) {
         const reordered = arrayMove(columnItems, activeIndex, overIndex);
-        const otherItems = items.filter((item) => item.status !== activeItem.status);
+        const otherItems = items.filter((item) => item.status !== updatedItem.status);
         reorderItems([...otherItems, ...reordered]);
       }
     }
 
-    // CELEBRATION: If moved to "done" column, trigger confetti!
-    if (activeItem.status === 'done') {
+    // CELEBRATION: If moved TO "done" column (not just reordering within it)
+    if (originalStatus !== 'done' && updatedItem.status === 'done') {
       triggerConfetti();
     }
   };

@@ -23,6 +23,9 @@ const COLUMNS: ColumnConfig[] = [
   { id: 'done', title: 'Done', color: 'bg-green-100' },
 ];
 
+// Extract column IDs for type checking
+const COLUMN_IDS = COLUMNS.map(col => col.id);
+
 export function BoardColumns() {
   const { items, moveItem, reorderItems } = useKanban();
   const [activeItem, setActiveItem] = useState<KanbanItem | null>(null);
@@ -55,7 +58,7 @@ export function BoardColumns() {
     if (!activeItem) return;
 
     // Check if over is a column (Status) or another item
-    const overIsColumn = ['todo', 'doing', 'done'].includes(overId);
+    const overIsColumn = COLUMN_IDS.includes(overId);
 
     if (overIsColumn) {
       // Dropped on a column - move to that status

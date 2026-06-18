@@ -4,7 +4,7 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import { KanbanItem as KanbanItemComponent } from './KanbanItem';
-import { KanbanItem, Status } from '../types/kanban';
+import { Status } from '../types/kanban';
 import { useKanban } from '../context/KanbanContext';
 
 interface ColumnProps {

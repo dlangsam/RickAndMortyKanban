@@ -24,7 +24,7 @@ const COLUMNS: ColumnConfig[] = [
 ];
 
 // Extract column IDs for type checking
-const COLUMN_IDS = COLUMNS.map(col => col.id);
+const COLUMN_IDS = COLUMNS.map(col => col.id) as string[];
 
 export function BoardColumns() {
   const { items, moveItem, reorderItems } = useKanban();
